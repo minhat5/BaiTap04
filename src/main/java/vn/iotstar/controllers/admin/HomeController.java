@@ -20,7 +20,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Users acc = (Users) req.getSession().getAttribute("account");
-        req.setAttribute("item", categoryService.findByUserId(acc.getId()));
+        req.setAttribute("item", categoryService.findAll());
         req.getRequestDispatcher("/views/category/category-list.jsp").forward(req, resp);
     }
 }
