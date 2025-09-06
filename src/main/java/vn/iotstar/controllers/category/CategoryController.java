@@ -43,7 +43,6 @@ public class CategoryController extends HttpServlet {
                 return;
             }
             case "/category/create": {
-                // form thêm mới
                 request.getRequestDispatcher("/views/category/category-form.jsp").forward(request, response);
                 return;
             }
