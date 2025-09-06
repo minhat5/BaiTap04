@@ -21,6 +21,12 @@ public class RoleFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         Users user = (Users) req.getSession().getAttribute("account");
         String uri = req.getRequestURI();
+        String ctx = req.getContextPath();
+        Users acc = (Users) req.getSession().getAttribute("account");
+        if (acc == null) {
+            resp.sendRedirect(ctx + "/login");
+            return;
+        }
         if (!((uri.startsWith(req.getContextPath() + "/user/") && user.getRoleid() == 1) || (uri.startsWith(req.getContextPath() + "/manager/") && user.getRoleid() == 2) || (uri.startsWith(req.getContextPath() + "/admin/") && user.getRoleid() == 3))) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;

@@ -17,7 +17,7 @@ public class Category {
     private String description;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private Users user;
 
     private LocalDateTime created_at = LocalDateTime.now();

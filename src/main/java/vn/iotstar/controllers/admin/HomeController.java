@@ -5,14 +5,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import vn.iotstar.entity.Users;
+import vn.iotstar.services.CategoryService;
+import vn.iotstar.services.impl.CategoryServiceImpl;
 
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/admin/home"})
 public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private final CategoryService categoryService = new CategoryServiceImpl();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/views/admin/home.jsp").forward(request, response);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        Users acc = (Users) req.getSession().getAttribute("account");
+        req.setAttribute("item", categoryService.findByUserId(acc.getId()));
+        req.getRequestDispatcher("/views/category/category-list.jsp").forward(req, resp);
     }
 }

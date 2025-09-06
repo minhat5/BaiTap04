@@ -1,6 +1,7 @@
 package vn.iotstar.filters;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.iotstar.entity.Category;
@@ -10,6 +11,9 @@ import vn.iotstar.services.impl.CategoryServiceImpl;
 
 import java.io.IOException;
 
+@WebFilter(filterName = "OwnerFilter", urlPatterns = {
+        "/category/edit", "/category/update", "/category/delete"
+})
 public class OwnerFilter implements Filter {
     private final CategoryService categoryService = new CategoryServiceImpl();
 
@@ -19,18 +23,39 @@ public class OwnerFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
-        Users user = (Users) req.getSession().getAttribute("account");
-        int id = Integer.parseInt(req.getParameter("id"));
-        Category category = categoryService.findById(id);
-        if (category == null) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest r = (HttpServletRequest) req;
+        HttpServletResponse p = (HttpServletResponse) res;
+
+        Users acc = (Users) r.getSession().getAttribute("account");
+        if (acc == null) {
+            p.sendRedirect(r.getContextPath() + "/login");
             return;
         }
-        if (user.getRoleid() != 3) {
+
+        if (acc.getRoleid() == 3) {
+            chain.doFilter(req, res);
+            return;
         }
+
+        String sid = r.getParameter("id");
+        if (sid == null) {
+            p.sendError(400, "Missing id");
+            return;
+        }
+
+        int id = Integer.parseInt(sid);
+        Category c = categoryService.findById(id);
+        if (c == null) {
+            p.sendError(404);
+            return;
+        }
+
+        if (c.getUser() == null || c.getUser().getId() != acc.getId()) {
+            p.sendError(403);
+            return;
+        }
+        chain.doFilter(req, res);
     }
 
     @Override

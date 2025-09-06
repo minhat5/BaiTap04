@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="../topbar/topbar.jsp"/>
 <div class="page">
-    <h2>Xin chào Manager: ${sessionScope.account.fullName}</h2>
+    <h2>Xin chào Manager: ${sessionScope.account.fullname}</h2>
     <p>Đây là trang quản lý dành cho manager.</p>
 </div>
 </body>

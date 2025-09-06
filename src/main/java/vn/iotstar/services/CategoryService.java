@@ -16,6 +16,5 @@ public interface CategoryService {
     void deleteById(int id);
 
     List<Category> findByUserId(int id);
-
-    void delete(Category category);
+    
 }

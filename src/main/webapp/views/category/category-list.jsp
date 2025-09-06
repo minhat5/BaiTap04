@@ -1,43 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<link rel="stylesheet"
-      href="${pageContext.request.contextPath}/style/style.css"/>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css"/>
 <%@ include file="../topbar/topbar.jsp" %>
+
 <div class="page">
     <div class="container">
-        <div class="card" style="width: 100%;">
-            <h2>Danh sách danh mục</h2>
-            <p>
-                <a class="btn"
-                   href="${pageContext.request.contextPath}/admin/category/add">+
-                    Thêm danh mục</a>
-            </p>
+        <div class="card" style="width:100%">
+            <div class="row" style="justify-content: space-between; align-items: center;">
+                <h2>Danh sách danh mục</h2>
+                <a class="btn" href="${pageContext.request.contextPath}/category/create">+ Thêm danh mục</a>
+            </div>
+
             <table class="table">
+                <thead>
                 <tr>
                     <th>#</th>
-                    <th>Icon</th>
-                    <th>Tên</th>
+                    <th>Mã</th>
+                    <th>Tên danh mục</th>
+                    <th>Mô tả</th>
                     <th>Hành động</th>
                 </tr>
-                <c:forEach var="cate" items="${cateList}" varStatus="st">
+                </thead>
+                <tbody>
+                <c:forEach var="cate" items="${item}" varStatus="st">
                     <tr>
                         <td>${st.index + 1}</td>
-                        <td><c:if test="${not empty cate.icon}">
-                            <img
-                                    src="${pageContext.request.contextPath}/image?fname=${cate.icon}"
-                                    width="80"/>
-                        </c:if></td>
-                        <td><c:out value="${cate.name}"/></td>
-                        <td><a
-                                href="${pageContext.request.contextPath}/admin/category/edit?id=${cate.id}">Sửa</a>
-                            | <a
-                                    href="${pageContext.request.contextPath}/admin/category/delete?id=${cate.id}"
-                                    onclick="return confirm('Xóa danh mục này?');">Xóa</a></td>
+                        <td>${cate.cate_id}</td>
+                        <td><c:out value="${cate.cate_name}"/></td>
+                        <td><c:out value="${cate.description}"/></td>
+                        <td class="options">
+                            <a href="${pageContext.request.contextPath}/category/view?id=${cate.cate_id}">Xem</a>
+                            <a href="${pageContext.request.contextPath}/category/edit?id=${cate.cate_id}">Sửa</a>
+                            <a href="${pageContext.request.contextPath}/category/delete?id=${cate.cate_id}"
+                               onclick="return confirm('Xóa danh mục này?');">Xóa</a>
+                        </td>
                     </tr>
                 </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>

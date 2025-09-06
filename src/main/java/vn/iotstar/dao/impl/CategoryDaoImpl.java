@@ -66,24 +66,6 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public void delete(Category category) {
-        EntityManager emma = JPAConfig.getEntityManager();
-        EntityTransaction transaction = emma.getTransaction();
-        try {
-            transaction.begin();
-            emma.remove(emma.contains(category) ? category : emma.merge(category));
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            throw e;
-        } finally {
-            emma.close();
-        }
-    }
-
-    @Override
     public Category findById(int id) {
         EntityManager emma = JPAConfig.getEntityManager();
         try {
