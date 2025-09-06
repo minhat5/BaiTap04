@@ -5,6 +5,7 @@
              version="3.0">
     <persistence-unit name="dataSource">
         <class>vn.iotstar.entity.Category</class>
+        <class>vn.iotstar.entity.Users</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:sqlserver://localhost:1433;databaseName=Temp;encrypt=true;trustServerCertificate=true"/>
@@ -13,8 +14,8 @@
             <property name="jakarta.persistence.jdbc.password" value="123456"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2012Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
         </properties>
     </persistence-unit>
 </persistence>

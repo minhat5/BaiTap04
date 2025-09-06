@@ -7,7 +7,9 @@ import java.util.List;
 public interface CategoryDao {
     void create(Category category);
 
-    Category update(Category category);
+    void update(Category category);
+
+    void delete(int id);
 
     Category findById(int id);
 

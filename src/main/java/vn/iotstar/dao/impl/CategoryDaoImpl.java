@@ -19,7 +19,45 @@ public class CategoryDaoImpl implements CategoryDao {
             emma.persist(category);
             transaction.commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw ex;
+        } finally {
+            emma.close();
+        }
+    }
+
+    @Override
+    public void update(Category category) {
+        EntityManager emma = JPAConfig.getEntityManager();
+        EntityTransaction transaction = emma.getTransaction();
+        try {
+            transaction.begin();
+            emma.merge(category);
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw ex;
+        } finally {
+            emma.close();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        EntityManager emma = JPAConfig.getEntityManager();
+        EntityTransaction transaction = emma.getTransaction();
+        try {
+            transaction.begin();
+            Category category = emma.find(Category.class, id);
+            if (category != null) {
+                emma.remove(category);
+            }
+            transaction.commit();
+        } catch (Exception ex) {
             transaction.rollback();
             throw ex;
         } finally {
@@ -28,18 +66,23 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public Category update(Category category) {
-        return null;
-    }
-
-    @Override
     public Category findById(int id) {
-        return null;
+        EntityManager emma = JPAConfig.getEntityManager();
+        try {
+            return emma.find(Category.class, id);
+        } finally {
+            emma.close();
+        }
     }
 
     @Override
     public List<Category> findAll() {
-        return null;
+        EntityManager emma = JPAConfig.getEntityManager();
+        try {
+            return emma.createQuery("SELECT c FROM Category c", Category.class).getResultList();
+        } finally {
+            emma.close();
+        }
     }
 
 }
