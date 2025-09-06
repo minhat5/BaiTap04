@@ -79,7 +79,6 @@ public class CategoryController extends HttpServlet {
                 c.setUser(user);
                 c.setCreated_at(LocalDateTime.now());
                 categoryService.insert(c);
-                // Điều hướng về trang home theo role
                 redirectByRole(response, ctx, user.getRoleid());
                 return;
             }
