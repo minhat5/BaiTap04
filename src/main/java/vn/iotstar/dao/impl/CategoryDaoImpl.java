@@ -80,7 +80,7 @@ public class CategoryDaoImpl implements CategoryDao {
     public List<Category> findAll() {
         EntityManager emma = JPAConfig.getEntityManager();
         try {
-            return emma.createQuery("SELECT c FROM Category c", Category.class).getResultList();
+            return emma.createQuery("SELECT c FROM Category c JOIN FETCH c.user", Category.class).getResultList();
         } finally {
             emma.close();
         }
@@ -90,7 +90,7 @@ public class CategoryDaoImpl implements CategoryDao {
     public List<Category> findByUserId(int id) {
         EntityManager emma = JPAConfig.getEntityManager();
         try {
-            return emma.createQuery("SELECT c FROM Category c WHERE c.user.id = :id ORDER BY c.id DESC", Category.class).setParameter("id", id).getResultList();
+            return emma.createQuery("SELECT c FROM Category c JOIN FETCH c.user WHERE c.user.id = :id ORDER BY c.id DESC", Category.class).setParameter("id", id).getResultList();
         } finally {
             emma.close();
         }

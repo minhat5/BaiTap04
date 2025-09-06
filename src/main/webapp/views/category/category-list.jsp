@@ -18,6 +18,7 @@
                     <th>Mã</th>
                     <th>Tên danh mục</th>
                     <th>Mô tả</th>
+                    <th>Vai trò</th>
                     <th>Hành động</th>
                 </tr>
                 </thead>
@@ -28,6 +29,15 @@
                         <td>${cate.cate_id}</td>
                         <td><c:out value="${cate.cate_name}"/></td>
                         <td><c:out value="${cate.description}"/></td>
+                        <td>
+                            <span class="label" style="margin-left:8px;">
+                            <c:choose>
+                                <c:when test="${cate.user.roleid == 3}">Admin</c:when>
+                                <c:when test="${cate.user.roleid == 2}">Manager</c:when>
+                                <c:otherwise>User</c:otherwise>
+                            </c:choose>
+                          </span>
+                        </td>
                         <td class="options">
                             <a href="${pageContext.request.contextPath}/category/view?id=${cate.cate_id}">Xem</a>
                             <a href="${pageContext.request.contextPath}/category/edit?id=${cate.cate_id}">Sửa</a>
