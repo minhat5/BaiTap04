@@ -66,6 +66,24 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
+    public void delete(Category category) {
+        EntityManager emma = JPAConfig.getEntityManager();
+        EntityTransaction transaction = emma.getTransaction();
+        try {
+            transaction.begin();
+            emma.remove(emma.contains(category) ? category : emma.merge(category));
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw e;
+        } finally {
+            emma.close();
+        }
+    }
+
+    @Override
     public Category findById(int id) {
         EntityManager emma = JPAConfig.getEntityManager();
         try {
@@ -74,6 +92,7 @@ public class CategoryDaoImpl implements CategoryDao {
             emma.close();
         }
     }
+
 
     @Override
     public List<Category> findAll() {
@@ -85,4 +104,13 @@ public class CategoryDaoImpl implements CategoryDao {
         }
     }
 
+    @Override
+    public List<Category> findByUserId(int id) {
+        EntityManager emma = JPAConfig.getEntityManager();
+        try {
+            return emma.createQuery("SELECT c FROM Category c WHERE c.user.id = :id ORDER BY c.id DESC", Category.class).setParameter("id", id).getResultList();
+        } finally {
+            emma.close();
+        }
+    }
 }

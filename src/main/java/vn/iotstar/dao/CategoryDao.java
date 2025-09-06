@@ -11,8 +11,11 @@ public interface CategoryDao {
 
     void delete(int id);
 
+    void delete(Category category);
+
     Category findById(int id);
 
     List<Category> findAll();
 
+    List<Category> findByUserId(int id);
 }

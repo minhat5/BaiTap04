@@ -11,7 +11,7 @@
 
 <div class="container">
     <div class="page">
-        <h2>Xin chào, ${username}!</h2>
+        <h2>Xin chào, ${sessionScope.account.fullname}!</h2>
         <p>Bạn đã đăng nhập thành công. Đây là trang dành cho người dùng sau khi login.</p>
     </div>
 </div>
