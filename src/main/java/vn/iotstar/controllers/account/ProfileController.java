@@ -8,10 +8,7 @@ import vn.iotstar.entity.Users;
 import vn.iotstar.services.UserService;
 import vn.iotstar.services.impl.UserServiceImpl;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/profile"})
 @MultipartConfig(
