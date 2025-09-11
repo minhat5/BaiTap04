@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css">
 </head>
 <body>
-<%@ include file="../topbar/topbar.jsp" %>
 
 <div class="container">
     <div class="page">

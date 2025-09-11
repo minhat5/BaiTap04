@@ -13,7 +13,7 @@ import java.util.Set;
 public class AuthFilter implements Filter {
     private static final Set<String> PUBLIC = Set.of(
             "/", "/login", "/register", "/verify-otp", "/reset-password", "/waiting",
-            "/style/", "/image", "/assets/", "/js/", "/css/"
+            "/style/", "/images/", "/assets/", "/js/", "/css/"
     );
 
     @Override

@@ -9,7 +9,6 @@
           href="${pageContext.request.contextPath}/style/style.css">
 </head>
 <body>
-<jsp:include page="../topbar/topbar.jsp"/>
 <div class="page">
     <h2>Xin chào Admin: ${sessionScope.account.fullname}</h2>
     <p>Đây là trang quản trị dành cho admin.</p>

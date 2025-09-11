@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <mapping path="/*" decorator="/main.jsp"/>
+
+    <mapping path="/style/*"/>
+    <mapping path="/images/*"/>
+    <mapping path="/uploads/*"/>
+    <mapping path="/favicon.ico"/>
+</sitemesh>

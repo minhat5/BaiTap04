@@ -1,58 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Hồ sơ cá nhân</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-<%@ include file="../topbar/topbar.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="page">
-    <div class="container">
-        <div class="card profile-card">
-            <div class="profile-header">
-                <img class="avatar"
-                     src="<c:out value='${empty user.avatar ? "" : user.avatar}'/>"
-                     alt="avatar">
-                <div>
-                    <h2>${user.fullname}</h2>
-                    <p>@${user.username}</p>
-                </div>
-            </div>
+<title>Thông tin cá nhân</title>
 
-            <div class="profile-body">
-                <div class="row">
-                    <span class="label">Email</span>
-                    <span class="value">${user.email}</span>
-                </div>
-                <div class="row">
-                    <span class="label">Số điện thoại</span>
-                    <span class="value">${user.phone}</span>
-                </div>
-                <div class="row">
-                    <span class="label">Quyền</span>
-                    <span class="value">
-              <c:choose>
-                  <c:when test="${user.roleid == 3}">Quản trị viên</c:when>
-                  <c:when test="${user.roleid == 2}">Quản lý</c:when>
-                  <c:otherwise>Người dùng</c:otherwise>
-              </c:choose>
-            </span>
-                </div>
-                <div class="row">
-                    <span class="label">Ngày tạo</span>
-                    <span class="value">
-              <fmt:formatDate value="${user.createDate}" pattern="dd/MM/yyyy HH:mm"/>
-            </span>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-4">
+        <c:choose>
+            <c:when test="${empty user.avatar}">
+                <img class="img-thumbnail"
+                     src="<c:url value='/images/default-avatar.png'/>"
+                     alt="avatar"
+                     style="width:200px;height:200px;object-fit:cover;">
+            </c:when>
+            <c:otherwise>
+                <img class="img-thumbnail"
+                     src="<c:url value='${user.avatar}'/>"
+                     alt="avatar"
+                     style="width:200px;height:200px;object-fit:cover;">
+            </c:otherwise>
+        </c:choose>
+    </div>
+    <div class="col-md-8">
+        <h3><c:out value="${user.fullname}"/></h3>
+        <p><strong>Email:</strong> <c:out value="${user.email}"/></p>
+        <p><strong>Số điện thoại:</strong> <c:out value="${user.phone}"/></p>
+        <p><strong>Tài khoản:</strong> @<c:out value="${user.username}"/></p>
+        <p><strong>Ngày tạo:</strong>
+            <fmt:formatDate value="${user.createDate}" pattern="dd/MM/yyyy HH:mm"/>
+        </p>
+        <a href="${pageContext.request.contextPath}/profile-edit"
+           class="btn btn-primary">
+            <i class="fa fa-edit"></i> Chỉnh sửa
+        </a>
     </div>
 </div>
-</body>
-</html>

@@ -1,18 +1,24 @@
 package vn.iotstar.controllers.account;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import vn.iotstar.entity.Users;
 import vn.iotstar.services.UserService;
 import vn.iotstar.services.impl.UserServiceImpl;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/profile"})
+@MultipartConfig(
+        fileSizeThreshold = 2 * 1024 * 1024,
+        maxFileSize = 10 * 1024 * 1024,
+        maxRequestSize = 20 * 1024 * 1024
+)
 public class ProfileController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final UserService userService = new UserServiceImpl();
